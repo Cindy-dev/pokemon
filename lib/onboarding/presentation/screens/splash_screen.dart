@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       Navigator.pushReplacementNamed(context, PokemonRoutes.pokemonHomeScreen);
     });
     super.initState();
