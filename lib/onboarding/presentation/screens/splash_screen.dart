@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../utils/pokemon_routes.dart';
 import 'package:pokemon/utils/app_extension.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,15 +10,16 @@ class SplashScreen extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 500), () {
-
-      Navigator.pushReplacementNamed(context, VendoorRoutes.onboardingScreen);
+    Timer(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, PokemonRoutes.pokemonHomeScreen);
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
