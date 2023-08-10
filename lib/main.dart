@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/onboarding/presentation/screens/splash_screen.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: Container()
+      home: const SplashScreen()
     );
   }
 }
