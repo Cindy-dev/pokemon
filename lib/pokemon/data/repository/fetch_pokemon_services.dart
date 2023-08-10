@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/pokemon/data/model/fetch_pokemon_model.dart';
 import 'package:pokemon/pokemon/data/pokemon_dio_exception.dart';
 
 class FetchPokemonServices{
   final Dio dio = Dio();
 
-  Future<FetchPokemonModel> getWalletDetails() async {
+  Future<FetchPokemonModel> fetchPokemon() async {
     const url = "https://pokeapi.co/api/v2/pokemon/";
     try {
       final result = await dio.get(url);
@@ -21,3 +22,5 @@ class FetchPokemonServices{
   }
 
 }
+
+final fetchPokemonServices = Provider((ref) => FetchPokemonServices());
