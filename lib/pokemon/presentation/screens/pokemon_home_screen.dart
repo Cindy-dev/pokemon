@@ -1,18 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokemon/pokemon/logic/pokemon_states.dart';
 import 'package:pokemon/pokemon/logic/view_models/fetch_pokemon_view_model.dart';
+import 'package:pokemon/pokemon/presentation/widgets/pokemon_grid_display.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/pokemon_loading_indicatior.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 
-class PokemonHomeScreen extends StatefulWidget {
+class PokemonHomeScreen extends ConsumerStatefulWidget {
   const PokemonHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<PokemonHomeScreen> createState() => _PokemonHomeScreenState();
+  ConsumerState<PokemonHomeScreen> createState() => _PokemonHomeScreenState();
 }
 
-class _PokemonHomeScreenState extends State<PokemonHomeScreen> {
+class _PokemonHomeScreenState extends ConsumerState<PokemonHomeScreen> {
+  final scrollController = ScrollController();
+  @override
+  void initState() {
+    // Scheduling the fetchPokemon request function to run as soon as possible.
+    Future.microtask(() => ref.read(fetchPokemonVM.notifier).fetchPokemon());
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        ref.read(fetchPokemonVM.notifier).fetchPokemon();
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,46 +43,58 @@ class _PokemonHomeScreenState extends State<PokemonHomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           child: Column(
-           // shrinkWrap: true,
             children: [
               Consumer(
                 builder: (_, ref, child) {
                   final vm = ref.watch(fetchPokemonVM);
-                  return vm.when(
-                    data: (data) {
-                      return Expanded(
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 15,
-                                  crossAxisSpacing: 20),
-                          itemCount: data.results!.length,
-                          itemBuilder: (context, index) {
-                            final pokemon = data.results?[index].name;
-                            return Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: context.colors.blue),
-                              ),
-                              child: Text(pokemon ?? "",
-                                  style: AppTextStyles.bodyMedium),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    error: (e, s) {
-                      return Column(
+                  if (vm is PokemonLoadingState) {
+                    return pokemonLoadingIndicator(context);
+                  }
+                  if (vm is FetchPokemonLoadedState) {
+                    final items = vm.results!;
+                    return PokemonGridDisplay(
+                        pokemonResult: items,
+                        scrollController: scrollController);
+                  }
+                  if (vm is FetchPokemonLoadMoreState) {
+                    final items = vm.results!;
+                    return PokemonGridDisplay(
+                      pokemonResult: items,
+                      scrollController: scrollController,
+                      isLoadMore: true,
+                    );
+                  }
+                  if (vm is PokemonErrorState) {
+                    final e = vm.error.toString();
+                    return Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(e.toString(), style: AppTextStyles.bodyMedium)
+                          Center(
+                            child: Text(e.toString(),
+                                style: AppTextStyles.bodyMedium),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextButton(
+                            onPressed: () => ref
+                                .read(fetchPokemonVM.notifier)
+                                .fetchPokemon(),
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                backgroundColor: context.themeData.cardColor),
+                            child: const Text("Retry"),
+                          )
                         ],
-                      );
-                    },
-                    loading: () => pokemonLoadingIndicator(context),
-                  );
+                      ),
+                    );
+                  }
+                  return const Center(child: Text("No Data Found"));
                 },
               )
             ],

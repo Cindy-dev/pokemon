@@ -13,8 +13,13 @@ class PokemonLoadingState extends PokemonStates {
 }
 
 class FetchPokemonLoadedState extends PokemonStates {
-  final FetchPokemonModel fetchPokemonModel;
-  const FetchPokemonLoadedState(this.fetchPokemonModel);
+  final  List<PokemonResult>? results;
+  const FetchPokemonLoadedState(this.results);
+}
+
+class FetchPokemonLoadMoreState extends PokemonStates {
+  final  List<PokemonResult>? results;
+  const FetchPokemonLoadMoreState(this.results);
 }
 
 class PokemonErrorState extends PokemonStates {

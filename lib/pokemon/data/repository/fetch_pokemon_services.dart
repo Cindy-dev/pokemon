@@ -3,14 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/pokemon/data/model/fetch_pokemon_model.dart';
 import 'package:pokemon/pokemon/data/pokemon_dio_exception.dart';
 
-class FetchPokemonServices{
+class FetchPokemonServices {
   final Dio dio = Dio();
 
-  Future<FetchPokemonModel> fetchPokemon() async {
+  Future<FetchPokemonModel> fetchPokemon(
+      Map<String, dynamic> queryParam) async {
     const url = "https://pokeapi.co/api/v2/pokemon/";
     try {
-      final result = await dio.get(url);
-      print(result);
+      final result = await dio.get(url, queryParameters: queryParam);
       final responseModel = FetchPokemonModel.fromJson(result.data);
       return responseModel;
     } on DioException catch (error, stackTrace) {
@@ -20,7 +20,6 @@ class FetchPokemonServices{
       rethrow;
     }
   }
-
 }
 
 final fetchPokemonServices = Provider((ref) => FetchPokemonServices());
