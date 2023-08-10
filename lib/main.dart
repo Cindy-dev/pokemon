@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/utils/pokemon_routes.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,9 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-        routes: PokemonRoutes.routes,
-        initialRoute: PokemonRoutes.splashScreen,
-        onGenerateRoute: PokemonRoutes.generateRoute,
+      routes: PokemonRoutes.routes,
+      initialRoute: PokemonRoutes.splashScreen,
+      onGenerateRoute: PokemonRoutes.generateRoute,
     );
   }
 }

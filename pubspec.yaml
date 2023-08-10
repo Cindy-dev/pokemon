@@ -11,6 +11,7 @@ dependencies:
   flutter_riverpod: ^2.3.6
   equatable: ^2.0.5
   dio: ^5.2.0
+  infinite_scroll_pagination: ^3.2.0
 
   cupertino_icons: ^1.0.2
 

@@ -10,7 +10,7 @@ class FetchPokemonServices{
     const url = "https://pokeapi.co/api/v2/pokemon/";
     try {
       final result = await dio.get(url);
-      print(result.data);
+      print(result);
       final responseModel = FetchPokemonModel.fromJson(result.data);
       return responseModel;
     } on DioException catch (error, stackTrace) {
