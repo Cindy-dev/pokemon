@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/pokemon/data/model/fetch_pokemon_model.dart';
+import 'package:pokemon/pokemon/data/model/pokemon_detail_model.dart';
 import 'package:pokemon/pokemon/data/repository/fetch_pokemon_services.dart';
 import 'package:pokemon/pokemon/logic/pokemon_states.dart';
 
@@ -7,6 +8,7 @@ class FetchPokemonViewModel extends StateNotifier<PokemonStates> {
   int page = 0;
   int limit = 20;
   List<PokemonResult> pokemonData = [];
+  List<PokemonDetailModel> testPokemonData = [];
   final Ref ref;
   FetchPokemonViewModel(this.ref) : super(const PokemonInitialState());
 
@@ -41,4 +43,5 @@ class FetchPokemonViewModel extends StateNotifier<PokemonStates> {
 
 final fetchPokemonVM =
     StateNotifierProvider.autoDispose<FetchPokemonViewModel, PokemonStates>(
-        (ref) => FetchPokemonViewModel(ref));
+  (ref) => FetchPokemonViewModel(ref),
+);

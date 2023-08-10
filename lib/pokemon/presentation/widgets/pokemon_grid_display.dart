@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pokemon/utils/app_extension.dart';
-import '../../../utils/pokemon_loading_indicatior.dart';
-import '../../../utils/theme/theme.dart';
 import '../../data/model/fetch_pokemon_model.dart';
+import '../../../utils/pokemon_loading_indicatior.dart';
+import 'package:pokemon/pokemon/presentation/widgets/pokemon_view_widget.dart';
 
 class PokemonGridDisplay extends StatelessWidget {
   final List<PokemonResult> pokemonResult;
@@ -17,36 +16,27 @@ class PokemonGridDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Stack(
-        children: [
-          GridView.builder(
-            controller: scrollController,
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisSpacing: 15, crossAxisSpacing: 20),
-            itemCount: pokemonResult.length,
-            itemBuilder: (context, index) {
-              final pokemon = pokemonResult[index].name;
-              return Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: context.colors.blue),
-                ),
-                child: Text(pokemon ?? "", style: AppTextStyles.bodyMedium),
-              );
-            },
+    return Stack(
+      children: [
+        GridView.builder(
+          controller: scrollController,
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, mainAxisSpacing: 15, crossAxisSpacing: 20),
+          itemCount: pokemonResult.length,
+          itemBuilder: (context, index) {
+            final pokemon = pokemonResult[index];
+            return PokemonViewWidget(pokemon: pokemon);
+          },
+        ),
+        if (isLoadMore)
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: pokemonLoadingIndicator(context),
           ),
-          if (isLoadMore)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: pokemonLoadingIndicator(context),
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

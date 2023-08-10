@@ -42,62 +42,59 @@ class _PokemonHomeScreenState extends ConsumerState<PokemonHomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Column(
-            children: [
-              Consumer(
-                builder: (_, ref, child) {
-                  final vm = ref.watch(fetchPokemonVM);
-                  if (vm is PokemonLoadingState) {
-                    return pokemonLoadingIndicator(context);
-                  }
-                  if (vm is FetchPokemonLoadedState) {
-                    final items = vm.results!;
-                    return PokemonGridDisplay(
-                        pokemonResult: items,
-                        scrollController: scrollController);
-                  }
-                  if (vm is FetchPokemonLoadMoreState) {
-                    final items = vm.results!;
-                    return PokemonGridDisplay(
-                      pokemonResult: items,
-                      scrollController: scrollController,
-                      isLoadMore: true,
-                    );
-                  }
-                  if (vm is PokemonErrorState) {
-                    final e = vm.error.toString();
-                    return Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Text(e.toString(),
-                                style: AppTextStyles.bodyMedium),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextButton(
-                            onPressed: () => ref
-                                .read(fetchPokemonVM.notifier)
-                                .fetchPokemon(),
-                            style: TextButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                                backgroundColor: context.themeData.cardColor),
-                            child: const Text("Retry"),
-                          )
-                        ],
+          child: Consumer(
+            builder: (_, ref, child) {
+              final vm = ref.watch(fetchPokemonVM);
+              if (vm is PokemonLoadingState) {
+                return pokemonLoadingIndicator(context);
+              }
+              if (vm is FetchPokemonLoadedState) {
+                final items = vm.results!;
+                return PokemonGridDisplay(
+                    pokemonResult: items, scrollController: scrollController);
+              }
+              if (vm is FetchPokemonLoadMoreState) {
+                final items = vm.results!;
+                return PokemonGridDisplay(
+                  pokemonResult: items,
+                  scrollController: scrollController,
+                  isLoadMore: true,
+                );
+              }
+              if (vm is PokemonErrorState) {
+                final e = vm.error.toString();
+                return Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child:
+                            Text(e.toString(), style: AppTextStyles.bodyMedium),
                       ),
-                    );
-                  }
-                  return const Center(child: Text("No Data Found"));
-                },
-              )
-            ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextButton(
+                        onPressed: () =>
+                            ref.read(fetchPokemonVM.notifier).fetchPokemon(),
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            backgroundColor: context.themeData.cardColor),
+                        child: const Text("Retry"),
+                      )
+                    ],
+                  ),
+                );
+              }
+              return const Center(
+                child: Text("No Data Found"),
+              );
+            },
           ),
         ),
       ),
