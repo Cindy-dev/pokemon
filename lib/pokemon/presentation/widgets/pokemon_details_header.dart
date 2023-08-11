@@ -3,8 +3,10 @@ import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 
 class PokemonDetailsHeader extends StatelessWidget {
+  VoidCallback? favoriteButtonTap;
   final String title;
-  const PokemonDetailsHeader({Key? key, required this.title}) : super(key: key);
+  PokemonDetailsHeader({Key? key, required this.title, this.favoriteButtonTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,11 @@ class PokemonDetailsHeader extends StatelessWidget {
               title,
               style: AppTextStyles.headingBold,
             ),
-            Icon(Icons.favorite_outline, color: context.themeData.cardColor)
+            InkWell(
+              onTap: favoriteButtonTap,
+              child: Icon(Icons.favorite_outline,
+                  color: context.themeData.cardColor),
+            )
           ],
         ),
       ),

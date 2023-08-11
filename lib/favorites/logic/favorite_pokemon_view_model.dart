@@ -33,7 +33,7 @@ class FavoritePokemonVM extends StateNotifier<FavoritePokemonState> {
   }
 }
 
-final favoriteStationVM =
+final favoritePokemonVM =
     StateNotifierProvider<FavoritePokemonVM, FavoritePokemonState>(
         (ref) => FavoritePokemonVM(ref));
 

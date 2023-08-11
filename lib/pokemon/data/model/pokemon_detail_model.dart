@@ -4,7 +4,7 @@ class PokemonDetailModel extends Equatable {
   int? height;
   int? id;
   String? name;
-  List<dynamic>? pastTypes;
+  List<String>? pastTypes;
   Sprites? sprites;
   List<Stat>? stats;
   List<Type>? types;
@@ -28,7 +28,7 @@ class PokemonDetailModel extends Equatable {
         name: json["name"],
         weight: json["weight"],
         sprites: Sprites.fromJson(json["sprites"]),
-        pastTypes: List<dynamic>.from(json["past_types"].map((x) => x)),
+        pastTypes: List<String>.from(json["past_types"].map((x) => x)),
         stats: List<Stat>.from(json["stats"].map((x) => Stat.fromJson(x))),
         types: List<Type>.from(json["types"].map((x) => Type.fromJson(x))),
       );
