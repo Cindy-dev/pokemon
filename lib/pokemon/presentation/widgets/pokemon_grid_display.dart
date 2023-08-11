@@ -29,10 +29,10 @@ class PokemonGridDisplay extends StatelessWidget {
             itemCount: pokemonResult.length,
             itemBuilder: (context, index) {
               final pokemon = pokemonResult[index];
+              //if the search text does not contain the name of the pokemon
+              //return a widget saying that
               if (searchText.isNotEmpty &&
-                  !pokemon.name!.contains(
-                        searchText.toLowerCase(),
-                      )) {
+                  !pokemon.name!.toLowerCase().contains(searchText.toLowerCase())) {
                 return const SizedBox.shrink();
               }
               return PokemonViewWidget(pokemon: pokemon);
