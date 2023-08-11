@@ -12,12 +12,16 @@ dependencies:
   equatable: ^2.0.5
   dio: ^5.2.0
   flutter_svg: ^2.0.5
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.0.5
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.3.3
 
   flutter_lints: ^2.0.0
 
