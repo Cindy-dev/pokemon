@@ -26,6 +26,7 @@ class PokemonViewWidget extends ConsumerWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (data.sprites != null)
             Flexible(
@@ -34,7 +35,8 @@ class PokemonViewWidget extends ConsumerWidget {
                 fit: BoxFit.contain,
               ),
             ),
-          Padding(
+          Container(
+            alignment: Alignment.bottomCenter,
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(data.name ?? "", style: AppTextStyles.headingSemiBold,),
           )
