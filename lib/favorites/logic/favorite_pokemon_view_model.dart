@@ -1,52 +1,44 @@
-import 'package:cindy_radio/data/model/favorite_db.dart';
-import 'package:cindy_radio/data/model/radio_model.dart';
-import 'package:cindy_radio/data/repository/service/favorite_radio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokemon/favorites/data/model/favorite_pokemon_db.dart';
+import '../data/repository/favorite_pokemon_services.dart';
+import 'favorite_pokemon_states.dart';
 
-
-///Favorite Station provider
-class FavoriteStationVM extends StateNotifier<FavoriteStationState> {
+class FavoritePokemonVM extends StateNotifier<FavoritePokemonState> {
   final Ref ref;
-  FavoriteStationVM(this.ref) : super(const FavoriteStationInitial());
+  FavoritePokemonVM(this.ref) : super(const FavoritePokemonInitial());
 
   addToFavorite({
-    required String stationuuid,
-    required String url,
+    required int height,
     required String name,
-    required int clickcount,
-    required String country,
-    required String countrycode,
-    required String favicon,
-    required String tags,
-    int? id,
+    required String image,
+    required int weight,
+    required int pokemonId,
+    required List<String> type,
   }) {
-    state = const FavoriteStationLoading();
+    state = const FavoritePokemonLoading();
     try {
-      final result =
-      ref.read(favoriteRadioStationServiceProvider).toggleFavoriteItem(
-          stationuuid: stationuuid,
-          url: url,
-          name: name,
-          clickcount: clickcount,
-          country: country,
-          countrycode: countrycode,
-          tags: tags,
-          favicon: favicon,
-          id: id
-      );
-      state = FavoriteStationAdded(result);
+      final result = ref
+          .read(favoritePokemonServiceProvider)
+          .toggleFavoriteItem(
+              height: height,
+              name: name,
+              image: image,
+              weight: weight,
+              pokemonId: pokemonId,
+              type: type);
+      state = FavoritePokemonAdded(result);
     } catch (e) {
-      state = FavoriteStationError(e.toString());
+      state = FavoritePokemonError(e.toString());
     }
   }
 }
 
 final favoriteStationVM =
-StateNotifierProvider<FavoriteStationVM, FavoriteStationState>(
-        (ref) => FavoriteStationVM(ref));
+    StateNotifierProvider<FavoritePokemonVM, FavoritePokemonState>(
+        (ref) => FavoritePokemonVM(ref));
 
-final fetchFavoriteStationVM = StreamProvider<List<FavoriteDB>>((ref) {
-  final faveStations =
-  ref.watch(favoriteRadioStationServiceProvider).getAllFavorites();
-  return faveStations;
+final fetchFavoritePokemonVM = StreamProvider<List<FavoritePokemonDB>>((ref) {
+  final favePokemons =
+      ref.watch(favoritePokemonServiceProvider).getAllFavoritePokemon();
+  return favePokemons;
 });
