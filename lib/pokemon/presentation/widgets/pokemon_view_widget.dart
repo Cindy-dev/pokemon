@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pokemon/pokemon/presentation/screens/pokemon_details_screen.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 import '../../data/model/fetch_pokemon_model.dart';
@@ -24,23 +26,36 @@ class PokemonViewWidget extends ConsumerWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: context.colors.blue),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (data.sprites != null)
-            Flexible(
-              child: SvgPicture.network(
-                data.sprites!.other!.dreamWorld.frontDefault,
-                fit: BoxFit.contain,
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) {
+              return PokemonDetailsScreen(pokemonDetailModel: data);
+            },
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (data.sprites != null)
+              Flexible(
+                child: SvgPicture.network(
+                  data.sprites!.other!.dreamWorld.frontDefault,
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Text(data.name ?? "", style: AppTextStyles.headingSemiBold,),
-          )
-        ],
+            Container(
+              alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                data.name ?? "",
+                style: AppTextStyles.headingSemiBold,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
