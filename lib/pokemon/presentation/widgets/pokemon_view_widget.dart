@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokemon/utils/app_extension.dart';
+import 'package:pokemon/utils/theme/theme.dart';
 import '../../data/model/fetch_pokemon_model.dart';
 import '../../logic/view_models/pokemon_detail_view_model.dart';
 
@@ -19,10 +20,12 @@ class PokemonViewWidget extends ConsumerWidget {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
+        color: context.themeData.primaryColorLight,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: context.colors.blue),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (data.sprites != null)
             Flexible(
@@ -31,7 +34,10 @@ class PokemonViewWidget extends ConsumerWidget {
                 fit: BoxFit.contain,
               ),
             ),
-          Text(data.name ?? "")
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: Text(data.name ?? "", style: AppTextStyles.headingSemiBold,),
+          )
         ],
       ),
     );

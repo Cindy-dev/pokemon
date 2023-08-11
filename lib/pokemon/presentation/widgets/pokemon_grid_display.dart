@@ -22,7 +22,7 @@ class PokemonGridDisplay extends StatelessWidget {
           controller: scrollController,
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 15, crossAxisSpacing: 20),
+              crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 20),
           itemCount: pokemonResult.length,
           itemBuilder: (context, index) {
             final pokemon = pokemonResult[index];
