@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:pokemon/favorites/data/model/favorite_pokemon_db.dart';
+import 'package:pokemon/pokemon/data/model/pokemon_detail_model.dart';
 import 'isar_service.dart';
 
 class FavoritePokemonService {
@@ -9,53 +9,42 @@ class FavoritePokemonService {
   }
 
   Future<void> createFavorite(
-    FavoritePokemonDB newFavoritePokemon,
+    PokemonDetailModel newFavoritePokemon,
   ) async {
     final isar = await openIsar();
     isar.writeTxnSync<int>(
-        () => isar.favoritePokemonDBs.putSync(newFavoritePokemon));
+        () => isar.pokemonDetailModels.putSync(newFavoritePokemon));
   }
 
   Future<bool> existingItemFave(String pokemonName) async {
     final isar = await openIsar();
-    final favoriteDB = isar.favoritePokemonDBs;
+    final favoriteDB = isar.pokemonDetailModels;
     final existingItem = favoriteDB.where().filter().nameContains(pokemonName);
     return existingItem.isEmptySync();
   }
 
-  Stream<List<FavoritePokemonDB>> getAllFavoritePokemon() async* {
+  Stream<List<PokemonDetailModel>> getAllFavoritePokemon() async* {
     final isar = await openIsar();
-    yield* isar.favoritePokemonDBs.where().watch(fireImmediately: true);
+    yield* isar.pokemonDetailModels.where().watch(fireImmediately: true);
   }
 
-  toggleFavoriteItem(
-      {required int height,
-      required String name,
-      required String image,
-      required int weight,
-      required int pokemonId,
-      required List<String> type,
-      int? id}) async {
-    final isar = await openIsar();
-    final favoriteDB = isar.favoritePokemonDBs;
 
-    final existingItem = favoriteDB.where().filter().nameContains(name);
+  toggleFavoriteItem({required PokemonDetailModel pokemonDetailModel}) async {
+    final isar = await openIsar();
+    final favoriteDB = isar.pokemonDetailModels;
+
+    final existingItem =
+        favoriteDB.where().filter().nameContains(pokemonDetailModel.name!);
 
     if (existingItem.isEmptySync()) {
       // Insert or update pokemon favorite
-      final favoriteStation = FavoritePokemonDB()
-        ..name = name
-        ..type = type
-        ..weight = weight
-        ..height = height
-        ..image = image
-        ..pokemonId = pokemonId;
-      createFavorite(favoriteStation);
+      final favoritePokemon = pokemonDetailModel;
+      createFavorite(favoritePokemon);
     } else {
       final isar = await openIsar();
-      final itemIdToDelete = pokemonId; // user-selected id
+      final itemIdToDelete = pokemonDetailModel.id;
       await isar.writeTxn(() async {
-        await isar.favoritePokemonDBs.delete(itemIdToDelete);
+        await isar.pokemonDetailModels.delete(itemIdToDelete);
       });
     }
   }

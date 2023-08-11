@@ -1,4 +1,3 @@
-import 'package:pokemon/favorites/data/model/favorite_pokemon_db.dart';
 import 'package:pokemon/pokemon/data/model/pokemon_detail_model.dart';
 
 abstract class FavoritePokemonState {
@@ -19,7 +18,7 @@ class FavoritePokemonAdded extends FavoritePokemonState {
 }
 
 class FavoritePokemonLoaded extends FavoritePokemonState {
-  final Stream<List<FavoritePokemonDB>> favoritePokemons;
+  final Stream<List<PokemonDetailModel>> favoritePokemons;
   FavoritePokemonLoaded(this.favoritePokemons);
 }
 

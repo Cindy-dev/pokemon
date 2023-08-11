@@ -42,7 +42,7 @@ class PokemonViewWidget extends ConsumerWidget {
             if (data.sprites != null)
               Flexible(
                 child: SvgPicture.network(
-                  data.sprites!.other!.dreamWorld.frontDefault,
+                  data.sprites!.other!.dreamWorld!.frontDefault!,
                   fit: BoxFit.contain,
                 ),
               ),

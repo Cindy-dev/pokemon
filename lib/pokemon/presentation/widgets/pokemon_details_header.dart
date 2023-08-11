@@ -8,6 +8,7 @@ class PokemonDetailsHeader extends StatelessWidget {
   PokemonDetailsHeader({Key? key, required this.title, this.favoriteButtonTap})
       : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

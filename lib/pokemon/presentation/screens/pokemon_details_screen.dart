@@ -22,7 +22,7 @@ class PokemonDetailsScreen extends StatelessWidget {
           ListView(
             shrinkWrap: true,
             children: [
-              pokemonDetailModel.sprites?.other!.officialArtwork.frontDefault ==
+              pokemonDetailModel.sprites?.other!.officialArtwork!.frontDefault ==
                       null
                   ? Container(
                       alignment: Alignment.center,
@@ -34,7 +34,7 @@ class PokemonDetailsScreen extends StatelessWidget {
                         image: DecorationImage(
                             image: NetworkImage(
                               pokemonDetailModel
-                                  .sprites!.other!.officialArtwork.frontDefault,
+                                  .sprites!.other!.officialArtwork!.frontDefault!,
                             ),
                             fit: BoxFit.cover),
                       ),
@@ -45,14 +45,9 @@ class PokemonDetailsScreen extends StatelessWidget {
           Consumer(builder: (_, ref, child) {
             return PokemonDetailsHeader(
               favoriteButtonTap: () {
-                ref.read(favoritePokemonVM.notifier).addToFavorite(
-                    height: pokemonDetailModel.height ?? 0,
-                    name: pokemonDetailModel.name ?? "",
-                    image: pokemonDetailModel
-                        .sprites!.other!.officialArtwork.frontDefault,
-                    weight: pokemonDetailModel.weight ?? 0,
-                    pokemonId: pokemonDetailModel.id ?? 0,
-                    type: pokemonDetailModel.pastTypes ?? []);
+                ref
+                    .read(favoritePokemonVM.notifier)
+                    .addToFavorite(pokemonDetailModel: pokemonDetailModel);
               },
               title: "#${pokemonDetailModel.id ?? "0"}",
             );

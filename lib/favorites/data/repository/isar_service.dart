@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import '../model/favorite_pokemon_db.dart';
+import '../../../pokemon/data/model/pokemon_detail_model.dart';
 
 class IsarService {
   static Isar? _isar;
@@ -11,7 +11,7 @@ class IsarService {
       final dir = await getApplicationDocumentsDirectory();
 
       _isar = await Isar.open(
-        [FavoritePokemonDBSchema], // Pass the adapters for collections
+        [PokemonDetailModelSchema], // Pass the adapters for collections
         inspector: true,
         directory: dir.path,
       );

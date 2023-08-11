@@ -30,7 +30,7 @@ class PokemonDetailsWidget extends StatelessWidget {
                   color: context.colors.yellow,
                   borderRadius: BorderRadius.circular(50)),
               child: Text(
-                type.type.name ?? "",
+                type.type?.name ?? "",
                 style: AppTextStyles.heading2Bold.copyWith(
                     fontSize: 20, color: context.themeData.colorScheme.error),
               ),

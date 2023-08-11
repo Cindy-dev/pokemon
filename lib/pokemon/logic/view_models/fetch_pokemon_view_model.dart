@@ -42,6 +42,6 @@ class FetchPokemonViewModel extends StateNotifier<PokemonStates> {
 }
 
 final fetchPokemonVM =
-    StateNotifierProvider.autoDispose<FetchPokemonViewModel, PokemonStates>(
+    StateNotifierProvider<FetchPokemonViewModel, PokemonStates>(
   (ref) => FetchPokemonViewModel(ref),
 );
