@@ -55,19 +55,6 @@ class PokemonDetailModel extends Equatable {
       ];
 }
 
-class Type {
-  Type({
-    required this.slot,
-    required this.type,
-  });
-
-  final int slot;
-  final Detail type;
-
-  factory Type.fromJson(Map<String, dynamic> json) =>
-      Type(slot: json["slot"], type: Detail.fromJson(json["type"]));
-}
-
 class Sprites {
   String backDefault;
   dynamic backFemale;
@@ -208,12 +195,12 @@ class Stat {
 }
 
 class Detail {
-  final String? name;
-  final String? url;
+  final String name;
+  final String url;
 
   Detail({
-    this.name,
-    this.url,
+    required this.name,
+    required this.url,
   });
 
   factory Detail.fromJson(Map<String, dynamic> json) => Detail(
@@ -227,4 +214,15 @@ class Detail {
       };
 }
 
+class Type {
+  Type({
+    required this.slot,
+    required this.type,
+  });
 
+  final int slot;
+  final Detail type;
+
+  factory Type.fromJson(Map<String, dynamic> json) =>
+      Type(slot: json["slot"], type: Detail.fromJson(json["type"]));
+}
