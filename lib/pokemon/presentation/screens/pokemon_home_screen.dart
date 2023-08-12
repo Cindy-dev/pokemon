@@ -22,6 +22,7 @@ class _PokemonHomeScreenState extends ConsumerState<PokemonHomeScreen> {
   String _searchText = '';
   final scrollController = ScrollController();
   final searchController = TextEditingController();
+
   @override
   void initState() {
     // Scheduling the fetchPokemon request function to run as soon as possible.

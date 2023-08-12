@@ -42,6 +42,7 @@ class MyPokemonService {
         ..types = types;
       createMyPokemon(myPokemon);
     } else {
+
       throw Exception("Pokemon Name Already Exist");
     }
   }

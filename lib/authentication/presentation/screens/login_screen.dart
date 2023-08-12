@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/authentication/presentation/utils/email_validator_helper.dart';
 import 'package:pokemon/utils/app_extension.dart';
+import 'package:pokemon/utils/pokemon_button.dart';
+import 'package:pokemon/utils/pokemon_routes.dart';
+import 'package:pokemon/utils/pokemon_snackbar.dart';
 import 'package:pokemon/utils/pokemon_textfield.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 
@@ -22,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: context.primaryColor,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         child: Form(
           key: _formKey,
           child: Column(
@@ -74,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     PokemonTextField(
                         fieldColor: context.themeData.cardColor,
@@ -83,6 +86,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: "Password"),
                   ],
                 ),
+              ),
+              PokemonButton(
+                buttonTap: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                  if (_emailController.text.contains("@") &&
+                      _passwordController.text.length > 3) {
+                    Navigator.pushReplacementNamed(
+                        context, PokemonRoutes.pokemonHomeScreen);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      pokemonSnackBar(
+                          error:
+                              "Email should contain @ and Password should be more than 3 alphabet",
+                          context: context),
+                    );
+                  }
+                },
+                buttonText: "Login",
+                buttonColor: context.colors.yellow,
+              ),
+              SizedBox(
+                height: context.deviceHeight() / 20,
               )
             ],
           ),

@@ -20,7 +20,6 @@ class _MyPokemonFormWidgetState extends State<MyPokemonFormWidget> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
-  final TextEditingController _spriteUrlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -64,8 +63,10 @@ class _MyPokemonFormWidgetState extends State<MyPokemonFormWidget> {
                   }
                   if (nextState is MyPokemonErrorState) {
                     final error = nextState.error.toString();
-                     pokemonSnackBar(error: error, context: context);
-                  }
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(_).showSnackBar(
+                        pokemonSnackBar(error: error, context: context));
+                   }
                 },
               );
               if (vm is MyPokemonLoadingState) {

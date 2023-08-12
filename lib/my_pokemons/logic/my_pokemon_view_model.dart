@@ -23,6 +23,7 @@ class MyPokemonVM extends StateNotifier<MyPokemonState> {
       state = const MyPokemonSuccessState();
     } catch (e) {
       state = MyPokemonErrorState(e.toString());
+      rethrow;
     }
   }
 

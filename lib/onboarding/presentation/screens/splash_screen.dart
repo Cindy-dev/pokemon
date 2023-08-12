@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 500), () {
-      Navigator.pushReplacementNamed(context, PokemonRoutes.pokemonHomeScreen);
+      Navigator.pushReplacementNamed(context, PokemonRoutes.loginScreen);
     });
     super.initState();
   }
