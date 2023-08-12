@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokemon/favorites/logic/favorite_pokemon_view_model.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 
 class PokemonDetailsHeader extends StatelessWidget {
   VoidCallback? favoriteButtonTap;
   final String title;
-  PokemonDetailsHeader({Key? key, required this.title, this.favoriteButtonTap})
+  final String pokemonName;
+  PokemonDetailsHeader(
+      {Key? key,
+      required this.title,
+      this.favoriteButtonTap,
+      required this.pokemonName})
       : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +34,25 @@ class PokemonDetailsHeader extends StatelessWidget {
               title,
               style: AppTextStyles.headingBold,
             ),
-            InkWell(
-              onTap: favoriteButtonTap,
-              child: Icon(Icons.favorite_outline,
-                  color: context.themeData.cardColor),
-            )
+            Consumer(builder: (_, ref, child) {
+              final isExisting = ref
+                  .watch(checkPokemonExistenceVM(pokemonName));
+             return isExisting.when(data: (data){
+                return data ?  InkWell(
+                  onTap: favoriteButtonTap,
+                  child: Icon(Icons.favorite_outline,
+                      color: context.themeData.cardColor),
+                ) : InkWell(
+                  onTap: favoriteButtonTap,
+                  child: Icon(Icons.favorite,
+                      color: context.themeData.cardColor),
+                );
+              }, error: (e,s){
+               return Container();
+             }, loading: (){
+               return Container();
+             } );
+            })
           ],
         ),
       ),

@@ -19,12 +19,24 @@ class FavoritePokemonVM extends StateNotifier<FavoritePokemonState> {
     }
   }
 
+  Future<bool> existingFavorite({required String name}) async {
+    state = const FavoritePokemonLoading();
+    try {
+      final isExisting =
+      await ref.read(favoritePokemonServiceProvider).existingItemFave(name);
+      state = const FavoritePokemonSuccess();
+      return isExisting;
+    } catch (e) {
+      state = FavoritePokemonError(e.toString());
+      rethrow;
+    }
+  }
+
   Stream<Future<Stream<List<PokemonDetailModel>>>> fetchFavorite() async* {
     state = const FavoritePokemonLoading();
     try {
-      final result = ref
-          .read(favoritePokemonServiceProvider)
-          .getAllFavoritePokemon();
+      final result =
+          ref.read(favoritePokemonServiceProvider).getAllFavoritePokemon();
       state = FavoritePokemonLoaded(result);
     } catch (e) {
       state = FavoritePokemonError(e.toString());
@@ -39,6 +51,12 @@ final favoritePokemonVM =
 
 final fetchFavoritePokemonVM = StreamProvider<List<PokemonDetailModel>>((ref) {
   final favePokemon =
-  ref.watch(favoritePokemonServiceProvider).getAllFavoritePokemon();
+      ref.watch(favoritePokemonServiceProvider).getAllFavoritePokemon();
   return favePokemon;
 });
+
+
+final checkPokemonExistenceVM = FutureProvider.family<bool, String>(
+      (ref, name) => FavoritePokemonVM(ref)
+      .existingFavorite(name: name),
+);

@@ -44,6 +44,7 @@ class PokemonDetailsScreen extends StatelessWidget {
           ),
           Consumer(builder: (_, ref, child) {
             return PokemonDetailsHeader(
+              pokemonName: pokemonDetailModel.name ?? "",
               favoriteButtonTap: () {
                 ref
                     .read(favoritePokemonVM.notifier)

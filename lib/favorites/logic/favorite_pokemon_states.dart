@@ -12,6 +12,10 @@ class FavoritePokemonLoading extends FavoritePokemonState {
   const FavoritePokemonLoading();
 }
 
+class FavoritePokemonSuccess extends FavoritePokemonState {
+  const FavoritePokemonSuccess();
+}
+
 class FavoritePokemonAdded extends FavoritePokemonState {
   final PokemonDetailModel pokemonDetailModel;
   FavoritePokemonAdded(this.pokemonDetailModel);
