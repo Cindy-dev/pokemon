@@ -27,7 +27,6 @@ class MyPokemonService {
   savePokemon({
     required String name,
     required int height,
-    required String spriteUrl,
     int? weight,
     List<String>? types,
   }) async {
@@ -37,7 +36,6 @@ class MyPokemonService {
     if (existingItem.isEmptySync()) {
       // create a pokemon
       final myPokemon = MyPokemonModel()
-        ..spriteUrl = spriteUrl
         ..name = name
         ..weight = weight
         ..height = height

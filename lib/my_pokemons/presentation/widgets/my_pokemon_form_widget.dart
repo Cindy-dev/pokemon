@@ -50,13 +50,6 @@ class _MyPokemonFormWidgetState extends State<MyPokemonFormWidget> {
             height: 15,
           ),
           PokemonTextField(
-              controller: _spriteUrlController,
-              hintText: "Input your pokemon image url",
-              labelText: "Pokemon Image Link"),
-          const SizedBox(
-            height: 15,
-          ),
-          PokemonTextField(
               controller: _typeController,
               hintText: "Input your pokemon type e.g (grass, poison)",
               labelText: "Pokemon Type"),
@@ -94,7 +87,6 @@ class _MyPokemonFormWidgetState extends State<MyPokemonFormWidget> {
                     ref.read(myPokemonVM.notifier).createMyPokemon(
                         name: _nameController.text,
                         height: int.parse(_heightController.text),
-                        spriteUrl: _spriteUrlController.text,
                         weight: int.parse(_weightController.text),
                         types: items);
                   },

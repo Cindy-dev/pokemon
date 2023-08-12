@@ -10,7 +10,6 @@ class MyPokemonVM extends StateNotifier<MyPokemonState> {
   createMyPokemon(
       {required String name,
       required int height,
-      required String spriteUrl,
       required int weight,
       List<String>? types}) async {
     state = const MyPokemonLoadingState();
@@ -20,7 +19,7 @@ class MyPokemonVM extends StateNotifier<MyPokemonState> {
           height: height,
           weight: weight,
           types: types,
-          spriteUrl: spriteUrl);
+      );
       state = const MyPokemonSuccessState();
     } catch (e) {
       state = MyPokemonErrorState(e.toString());
