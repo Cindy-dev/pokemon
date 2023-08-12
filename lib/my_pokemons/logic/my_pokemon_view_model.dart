@@ -10,16 +10,16 @@ class MyPokemonVM extends StateNotifier<MyPokemonState> {
   createMyPokemon(
       {required String name,
       required int height,
-      required int pokemonId,
       required String spriteUrl,
-      int? weight,
+      required int weight,
       List<String>? types}) async {
     state = const MyPokemonLoadingState();
     try {
       await ref.read(myPokemonServiceProvider).savePokemon(
           name: name,
           height: height,
-          pokemonId: pokemonId,
+          weight: weight,
+          types: types,
           spriteUrl: spriteUrl);
       state = const MyPokemonSuccessState();
     } catch (e) {
@@ -30,7 +30,7 @@ class MyPokemonVM extends StateNotifier<MyPokemonState> {
   Stream<Future<Stream<List<MyPokemonModel>>>> fetchMyPokemon() async* {
     state = const MyPokemonLoadingState();
     try {
-          ref.read(myPokemonServiceProvider).getAllMyPokemon();
+      ref.read(myPokemonServiceProvider).getAllMyPokemon();
       state = const MyPokemonSuccessState();
     } catch (e) {
       state = MyPokemonErrorState(e.toString());
@@ -39,11 +39,10 @@ class MyPokemonVM extends StateNotifier<MyPokemonState> {
   }
 }
 
-final myPokemonVM = StateNotifierProvider<MyPokemonVM, MyPokemonState>(
+final myPokemonVM = StateNotifierProvider.autoDispose<MyPokemonVM, MyPokemonState>(
     (ref) => MyPokemonVM(ref));
 
 final fetchMyPokemonVM = StreamProvider<List<MyPokemonModel>>((ref) {
-  final myPokemon =
-      ref.watch(myPokemonServiceProvider).getAllMyPokemon();
+  final myPokemon = ref.watch(myPokemonServiceProvider).getAllMyPokemon();
   return myPokemon;
 });

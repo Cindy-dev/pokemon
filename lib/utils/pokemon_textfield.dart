@@ -31,7 +31,7 @@ class PokemonTextField extends StatelessWidget {
       autovalidateMode: isEmail! ? AutovalidateMode.onUserInteraction : null,
       onChanged: onChanged,
       obscureText: obscureText!,
-      style: AppTextStyles.bodyMedium,
+      style: AppTextStyles.bodyMedium.copyWith(color: context.primaryColor),
       textCapitalization: TextCapitalization.sentences,
       keyboardType: keyboardType ?? TextInputType.text,
       validator: validate ??

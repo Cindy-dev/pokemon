@@ -24,31 +24,30 @@ class MyPokemonService {
   }
 
 
-  savePokemon({required String name,
+  savePokemon({
+    required String name,
     required int height,
-    required int pokemonId,
     required String spriteUrl,
     int? weight,
     List<String>? types,
   }) async {
     final isar = await openIsar();
     final myPokemonDB = isar.myPokemonModels;
+      final existingItem =
+      myPokemonDB.where().filter().nameContains(name);
+      if (existingItem.isEmptySync()) {
+        // create a pokemon
+        final myPokemon = MyPokemonModel()
+          ..spriteUrl = spriteUrl
+          ..name = name
+          ..weight = weight
+          ..height = height
+          ..types = types;
+        createMyPokemon(myPokemon);
+      } else {
 
-    final existingItem =
-    myPokemonDB.where().filter().nameContains(name);
-
-    if (existingItem.isEmptySync()) {
-      // create a pokemon
-      final myPokemon = MyPokemonModel()
-      ..spriteUrl = spriteUrl
-      ..name = name
-      ..weight = weight
-      ..height = height
-      ..types = types;
-      createMyPokemon(myPokemon);
-    } else {
-      throw Exception("Pokemon Name Already Exist");
-    }
+        throw Exception("Pokemon Name Already Exist");
+      }
   }
 }
 
