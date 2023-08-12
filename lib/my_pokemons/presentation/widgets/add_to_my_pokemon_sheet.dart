@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/my_pokemons/presentation/widgets/my_pokemon_form_widget.dart';
 import 'package:pokemon/utils/app_extension.dart';
 
 addToMyPokemonModalSheet(BuildContext context) {
@@ -11,7 +12,7 @@ addToMyPokemonModalSheet(BuildContext context) {
         builder: (BuildContext context, scrollController) {
           return Container(
             height: context.deviceHeight() / 1.5,
-            padding: const EdgeInsets.symmetric(vertical: 14),
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
             decoration: BoxDecoration(
               color: context.themeData.cardColor,
               borderRadius: const BorderRadius.only(
@@ -19,10 +20,7 @@ addToMyPokemonModalSheet(BuildContext context) {
                 topLeft: Radius.circular(20),
               ),
             ),
-            child: Column(
-              children: [
-                Text("Hey")
-              ],
+            child: MyPokemonFormWidget(
             ),
           );
         },

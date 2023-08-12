@@ -48,12 +48,14 @@ class PokemonTextField extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: labelText,
         labelStyle: AppTextStyles.headingSemiBold.copyWith(
-          fontSize: 14,
+          fontSize: 18,
           height: 0.6,
           color: appTheme.shadowColor.withOpacity(0.5),
         ),
         hintText: hintText,
-        hintStyle: AppTextStyles.bodyMedium.copyWith(fontSize: 14),
+        hintStyle: AppTextStyles.bodyMedium.copyWith(
+            fontSize: 12,
+            color: context.primaryColor.withOpacity(0.5)),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: context.themeData.colorScheme.error),
         ),
