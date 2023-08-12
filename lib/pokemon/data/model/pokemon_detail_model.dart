@@ -5,7 +5,7 @@ import 'package:pokemon/pokemon/data/model/type.dart';
 part 'pokemon_detail_model.g.dart';
 
 @collection
-class PokemonDetailModel {
+class PokemonDetailModel{
   Id id = Isar.autoIncrement;
   int? height;
   int? pokemonId;
@@ -43,5 +43,8 @@ class PokemonDetailModel {
         "sprites": sprites!.toJson(),
         "weight": weight,
       };
+
+
+
 }
 
