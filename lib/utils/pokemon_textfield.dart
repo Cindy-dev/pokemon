@@ -9,6 +9,7 @@ class PokemonTextField extends StatelessWidget {
   bool? obscureText;
   bool? isEmail;
   Widget? suffixIcon;
+  Color? fieldColor;
   final TextInputType? keyboardType;
   String? Function(String?)? validate;
   String? Function(String?)? onChanged;
@@ -19,6 +20,7 @@ class PokemonTextField extends StatelessWidget {
       this.suffixIcon,
       this.obscureText = false,
       this.isEmail = false,
+      this.fieldColor,
       this.keyboardType,
       this.validate,
       this.onChanged,
@@ -31,7 +33,8 @@ class PokemonTextField extends StatelessWidget {
       autovalidateMode: isEmail! ? AutovalidateMode.onUserInteraction : null,
       onChanged: onChanged,
       obscureText: obscureText!,
-      style: AppTextStyles.bodyMedium.copyWith(color: context.primaryColor),
+      style: AppTextStyles.bodyMedium
+          .copyWith(color: fieldColor ?? context.primaryColor),
       textCapitalization: TextCapitalization.sentences,
       keyboardType: keyboardType ?? TextInputType.text,
       validator: validate ??
@@ -42,7 +45,7 @@ class PokemonTextField extends StatelessWidget {
             return null;
           },
       controller: controller,
-      cursorColor: context.primaryColor,
+      cursorColor: fieldColor ?? context.primaryColor,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -50,23 +53,26 @@ class PokemonTextField extends StatelessWidget {
         labelStyle: AppTextStyles.headingSemiBold.copyWith(
           fontSize: 18,
           height: 0.6,
-          color: appTheme.shadowColor.withOpacity(0.5),
+          color: fieldColor ?? appTheme.shadowColor.withOpacity(0.5),
         ),
         hintText: hintText,
         hintStyle: AppTextStyles.bodyMedium.copyWith(
             fontSize: 12,
-            color: context.primaryColor.withOpacity(0.5)),
+            color: fieldColor ?? context.primaryColor.withOpacity(0.5)),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: context.themeData.colorScheme.error),
         ),
         border: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.themeData.primaryColorLight),
+          borderSide: BorderSide(
+              color: fieldColor ?? context.themeData.primaryColorLight),
         ),
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.themeData.primaryColorLight),
+          borderSide: BorderSide(
+              color: fieldColor ?? context.themeData.primaryColorLight),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: context.themeData.primaryColorLight),
+          borderSide: BorderSide(
+              color: fieldColor ?? context.themeData.primaryColorLight),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokemon/authentication/presentation/screens/login_screen.dart';
 import 'package:pokemon/utils/pokemon_routes.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 import 'favorites/data/repository/isar_service.dart';
@@ -17,9 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      routes: PokemonRoutes.routes,
-      initialRoute: PokemonRoutes.splashScreen,
-      onGenerateRoute: PokemonRoutes.generateRoute,
+      home: LoginScreen(),
+      // routes: PokemonRoutes.routes,
+      // initialRoute: PokemonRoutes.splashScreen,
+      // onGenerateRoute: PokemonRoutes.generateRoute,
     );
   }
 }
