@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/pokemon_routes.dart';
-
 import '../../../utils/theme/theme.dart';
 
 class MyPokemonButton extends StatelessWidget {
