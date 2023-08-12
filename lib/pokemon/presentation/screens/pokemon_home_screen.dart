@@ -4,6 +4,7 @@ import 'package:pokemon/favorites/presentation/screens/favorite_pokemon_screen.d
 import 'package:pokemon/my_pokemons/presentation/widgets/add_to_my_pokemon_sheet.dart';
 import 'package:pokemon/pokemon/logic/pokemon_states.dart';
 import 'package:pokemon/pokemon/logic/view_models/fetch_pokemon_view_model.dart';
+import 'package:pokemon/pokemon/presentation/widgets/my_pokemon_button.dart';
 import 'package:pokemon/pokemon/presentation/widgets/pokemon_grid_display.dart';
 import 'package:pokemon/pokemon/presentation/widgets/pokemon_search_field.dart';
 import 'package:pokemon/utils/app_extension.dart';
@@ -45,120 +46,133 @@ class _PokemonHomeScreenState extends ConsumerState<PokemonHomeScreen> {
     return Scaffold(
       backgroundColor: context.primaryColor,
       body: SafeArea(
-        child: DefaultTabController(
-          length: 2,
-          child: Column(
-            children: [
-              TabBar(
-                labelColor: context.colors.yellow,
-                labelStyle: AppTextStyles.headingSemiBold
-                    .copyWith(color: context.colors.yellow, fontSize: 13),
-                unselectedLabelStyle: AppTextStyles.bodySemiBold
-                    .copyWith(color: context.themeData.cardColor, fontSize: 13),
-                unselectedLabelColor: context.themeData.cardColor,
-                tabs: const [
-                  Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("Pokemons"),
-                    ),
-                  ),
-                  Tab(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("Favorite"),
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
+        child: Column(
+          children: [
+            const MyPokemonButton(),
+            Expanded(
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 10),
-                      child: Column(
+                    TabBar(
+                      labelColor: context.colors.yellow,
+                      labelStyle: AppTextStyles.headingSemiBold
+                          .copyWith(color: context.colors.yellow, fontSize: 13),
+                      unselectedLabelStyle: AppTextStyles.bodySemiBold.copyWith(
+                          color: context.themeData.cardColor, fontSize: 13),
+                      unselectedLabelColor: context.themeData.cardColor,
+                      tabs: const [
+                        Tab(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("Pokemons"),
+                          ),
+                        ),
+                        Tab(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("Favorite"),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
                         children: [
-                          PokemonSearchField(
-                            searchController: searchController,
-                            onChanged: (string) {
-                              setState(
-                                () {
-                                  _searchText = searchController.text.trim();
-                                },
-                              );
-                            },
-                          ),
-                          Consumer(
-                            builder: (_, ref, child) {
-                              final vm = ref.watch(fetchPokemonVM);
-                              if (vm is PokemonLoadingState) {
-                                return pokemonLoadingIndicator(context);
-                              }
-                              if (vm is FetchPokemonLoadedState) {
-                                final items = vm.results!;
-                                return PokemonGridDisplay(
-                                    searchText: _searchText,
-                                    pokemonResult: items,
-                                    scrollController: scrollController);
-                              }
-                              if (vm is FetchPokemonLoadMoreState) {
-                                final items = vm.results!;
-                                return PokemonGridDisplay(
-                                  searchText: _searchText,
-                                  pokemonResult: items,
-                                  scrollController: scrollController,
-                                  isLoadMore: true,
-                                );
-                              }
-                              if (vm is PokemonErrorState) {
-                                final e = vm.error.toString();
-                                return Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: Text(e.toString(),
-                                            style: AppTextStyles.bodyMedium),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextButton(
-                                        onPressed: () => ref
-                                            .read(fetchPokemonVM.notifier)
-                                            .fetchPokemon(),
-                                        style: TextButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 10),
+                            child: Column(
+                              children: [
+                                PokemonSearchField(
+                                  searchController: searchController,
+                                  onChanged: (string) {
+                                    setState(
+                                      () {
+                                        _searchText =
+                                            searchController.text.trim();
+                                      },
+                                    );
+                                  },
+                                ),
+                                Consumer(
+                                  builder: (_, ref, child) {
+                                    final vm = ref.watch(fetchPokemonVM);
+                                    if (vm is PokemonLoadingState) {
+                                      return pokemonLoadingIndicator(context);
+                                    }
+                                    if (vm is FetchPokemonLoadedState) {
+                                      final items = vm.results!;
+                                      return PokemonGridDisplay(
+                                          searchText: _searchText,
+                                          pokemonResult: items,
+                                          scrollController: scrollController);
+                                    }
+                                    if (vm is FetchPokemonLoadMoreState) {
+                                      final items = vm.results!;
+                                      return PokemonGridDisplay(
+                                        searchText: _searchText,
+                                        pokemonResult: items,
+                                        scrollController: scrollController,
+                                        isLoadMore: true,
+                                      );
+                                    }
+                                    if (vm is PokemonErrorState) {
+                                      final e = vm.error.toString();
+                                      return Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Center(
+                                              child: Text(e.toString(),
+                                                  style:
+                                                      AppTextStyles.bodyMedium),
                                             ),
-                                            backgroundColor:
-                                                context.themeData.cardColor),
-                                        child: const Text("Retry"),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }
-                              return const Center(
-                                child: Text("An error occurred"),
-                              );
-                            },
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            TextButton(
+                                              onPressed: () => ref
+                                                  .read(fetchPokemonVM.notifier)
+                                                  .fetchPokemon(),
+                                              style: TextButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                  ),
+                                                  backgroundColor: context
+                                                      .themeData.cardColor),
+                                              child: const Text("Retry"),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                    return const Center(
+                                      child: Text("An error occurred"),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
+                          const FavoritePokemonScreen()
                         ],
                       ),
                     ),
-                    const FavoritePokemonScreen()
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Padding(

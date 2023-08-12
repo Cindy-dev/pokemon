@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pokemon/favorites/presentation/screens/favorite_pokemon_screen.dart';
 import '../onboarding/presentation/screens/splash_screen.dart';
 import '../pokemon/presentation/screens/pokemon_home_screen.dart';
+import '../my_pokemons/presentation/screens/my_pokemon_screen.dart';
+import 'package:pokemon/favorites/presentation/screens/favorite_pokemon_screen.dart';
 
 class PokemonRoutes {
   static const String splashScreen = '/splash';
   static const String pokemonHomeScreen = '/home';
   static const String pokemonFavoriteScreen = '/favorite';
+  static const String myPokemonScreen = '/myPokemon';
 
   static Map<String, Widget Function(BuildContext)> routes = {};
 
@@ -21,6 +23,9 @@ class PokemonRoutes {
         case pokemonFavoriteScreen:
         return CupertinoPageRoute(
             builder: (context) => const FavoritePokemonScreen());
+        case myPokemonScreen:
+        return CupertinoPageRoute(
+            builder: (context) => const MyPokemonScreen());
       // Default Route is error route
       default:
         return CupertinoPageRoute(
