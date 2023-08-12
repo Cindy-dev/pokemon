@@ -33,68 +33,60 @@ class _FavoritePokemonScreenState extends ConsumerState<FavoritePokemonScreen> {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               final favoritePokemonData = data[index];
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.only(
-                                              bottom: 24, right: 14),
-                                          height: context.deviceHeight() / 10,
-                                          width: context.deviceWidth() / 4,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  favoritePokemonData
-                                                      .sprites!.frontDefault!),
-                                              fit: BoxFit.contain,
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(
+                                                right: 14),
+                                            height: context.deviceHeight() / 15,
+                                            width: context.deviceWidth() / 4,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                    favoritePokemonData.sprites!
+                                                        .frontDefault!),
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                favoritePokemonData.name!
-                                                    .trim(),
-                                                style: AppTextStyles
-                                                    .headingSemiBold,
-                                              ),
-                                              const SizedBox(height: 6),
-                                            ],
+                                          Text(
+                                            favoritePokemonData.name!.trim(),
+                                            style:
+                                                AppTextStyles.headingSemiBold,
+                                          ),
+                                          const SizedBox(height: 6),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: context.deviceWidth() / 17),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            ref
+                                                .read(
+                                                    favoritePokemonServiceProvider)
+                                                .toggleFavoriteItem(
+                                                    pokemonDetailModel:
+                                                        favoritePokemonData);
+                                          },
+                                          child: Icon(
+                                            Icons.favorite,
+                                            size: 24,
+                                            color: context.themeData.cardColor,
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                  SizedBox(width: context.deviceWidth() / 17),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          ref
-                                              .read(
-                                                  favoritePokemonServiceProvider)
-                                              .toggleFavoriteItem(
-                                                  pokemonDetailModel:
-                                                      favoritePokemonData);
-                                          setState(() {});
-                                        },
-                                        child: Icon(
-                                          Icons.favorite,
-                                          size: 24,
-                                          color: context.themeData.cardColor,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               );
                             },
                           ),
@@ -102,7 +94,7 @@ class _FavoritePokemonScreenState extends ConsumerState<FavoritePokemonScreen> {
                       : const Expanded(
                           child: Center(
                             child: Text("Favorite List is Empty",
-                                style: AppTextStyles.heading2Bold),
+                                style: AppTextStyles.headingSemiBold),
                           ),
                         );
                 },

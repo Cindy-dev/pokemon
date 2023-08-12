@@ -160,6 +160,15 @@ class _PokemonHomeScreenState extends ConsumerState<PokemonHomeScreen> {
           ),
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 10, bottom: 10),
+        child: FloatingActionButton(
+
+          backgroundColor: context.themeData.cardColor,
+          onPressed: () {},
+          child: Icon(Icons.add, color: context.primaryColor,),
+        ),
+      ),
     );
   }
 }
