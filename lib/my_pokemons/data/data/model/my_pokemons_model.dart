@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+part 'my_pokemons_model.g.dart';
 
 @collection
 class MyPokemonModel {

@@ -11,7 +11,7 @@ class IsarService {
       final dir = await getApplicationDocumentsDirectory();
 
       _isar = await Isar.open(
-        [PokemonDetailModelSchema],
+        [PokemonDetailModelSchema, ],
         inspector: true,
         directory: dir.path,
       );
