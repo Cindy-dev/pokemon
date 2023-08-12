@@ -16,8 +16,17 @@ class PokemonGridDisplay extends StatelessWidget {
       required this.searchText})
       : super(key: key);
 
+
+  //created a new list for filtered result, this holds the filter data
+  List<PokemonResult> filteredPokemonResult = [];
+
   @override
   Widget build(BuildContext context) {
+    filterPokemon();
+    // checking if the filtered list is empty to return a not found text
+    if (filteredPokemonResult.isEmpty) {
+      return const Center(child: Text("Pokemon name not found"));
+    }
     return Expanded(
       child: Stack(
         children: [
@@ -26,15 +35,9 @@ class PokemonGridDisplay extends StatelessWidget {
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, mainAxisSpacing: 30, crossAxisSpacing: 20),
-            itemCount: pokemonResult.length,
+            itemCount: filteredPokemonResult.length,
             itemBuilder: (context, index) {
-              final pokemon = pokemonResult[index];
-              //if the search text does not contain the name of the pokemon
-              //return a widget saying that
-              if (searchText.isNotEmpty &&
-                  !pokemon.name!.toLowerCase().contains(searchText.toLowerCase())) {
-                return const SizedBox.shrink();
-              }
+              final pokemon = filteredPokemonResult[index];
               return PokemonViewWidget(pokemon: pokemon);
             },
           ),
@@ -48,5 +51,18 @@ class PokemonGridDisplay extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void filterPokemon() {
+    //if search text is not empty filter the pokemon data and assign it to the
+    //filtered pokemon result else filtered pokemon result should be same with the main result
+    if (searchText.isNotEmpty) {
+      filteredPokemonResult = pokemonResult
+          .where((pokemon) =>
+              pokemon.name!.toLowerCase().contains(searchText.toLowerCase()))
+          .toList();
+    } else {
+      filteredPokemonResult = pokemonResult;
+    }
   }
 }

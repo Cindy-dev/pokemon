@@ -32,7 +32,7 @@ class FetchPokemonModel extends Equatable {
   List<Object?> get props => [results, count, next, previous];
 }
 
-class PokemonResult {
+class PokemonResult extends Equatable{
   String? name;
   String? url;
 
@@ -50,4 +50,10 @@ class PokemonResult {
         "name": name,
         "url": url,
       };
+
+  @override
+  List<Object?> get props => [
+    name,
+    url
+  ];
 }

@@ -49,7 +49,7 @@ class PokemonDetailsScreen extends StatelessWidget {
                     .read(favoritePokemonVM.notifier)
                     .addToFavorite(pokemonDetailModel: pokemonDetailModel);
               },
-              title: "#${pokemonDetailModel.id ?? "0"}",
+              title: "#${pokemonDetailModel.pokemonId ?? "0"}",
             );
           }),
         ],
