@@ -2,10 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import '../../../favorites/data/repository/isar_service.dart';
 import 'package:pokemon/my_pokemons/data/data/model/my_pokemons_model.dart';
-import 'package:pokemon/pokemon/data/model/pokemon_detail_model.dart';
 
 
-class FavoritePokemonService {
+class MyPokemonService {
   Future<Isar> openIsar() async {
     return IsarService.isarInstance!;
   }
@@ -19,13 +18,13 @@ class FavoritePokemonService {
   }
 
 
-  Stream<List<PokemonDetailModel>> getAllMyPokemon() async* {
+  Stream<List<MyPokemonModel>> getAllMyPokemon() async* {
     final isar = await openIsar();
-    yield* isar.pokemonDetailModels.where().watch(fireImmediately: true);
+    yield* isar.myPokemonModels.where().watch(fireImmediately: true);
   }
 
 
-  saveItem({required String name,
+  savePokemon({required String name,
     required int height,
     required int pokemonId,
     required String spriteUrl,
@@ -55,4 +54,4 @@ class FavoritePokemonService {
 }
 
 final myPokemonServiceProvider =
-Provider((ref) => FavoritePokemonService());
+Provider((ref) => MyPokemonService());
