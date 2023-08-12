@@ -20,8 +20,7 @@ addToMyPokemonModalSheet(BuildContext context) {
                 topLeft: Radius.circular(20),
               ),
             ),
-            child: MyPokemonFormWidget(
-            ),
+            child: const MyPokemonFormWidget(),
           );
         },
       );

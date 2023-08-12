@@ -13,6 +13,8 @@ class _MyPokemonFormWidgetState extends State<MyPokemonFormWidget> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _typeController = TextEditingController();
+  final TextEditingController _spriteUrlController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -38,6 +40,19 @@ class _MyPokemonFormWidgetState extends State<MyPokemonFormWidget> {
               controller: _heightController,
               hintText: "Input your pokemon height",
               labelText: "Pokemon Height (M)"),
+          const SizedBox(
+            height: 15,
+          ),
+          PokemonTextField(
+              controller: _spriteUrlController,
+              hintText: "Input your pokemon image url",
+              labelText: "Pokemon Image"),
+
+          PokemonTextField(
+              controller: _typeController,
+              hintText: "Input your pokemon type e.g (grass, poison)",
+              labelText: "Pokemon Type"),
+
         ],
       ),
     );

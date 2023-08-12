@@ -27,23 +27,18 @@ const MyPokemonModelSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'pokemonId': PropertySchema(
-      id: 2,
-      name: r'pokemonId',
-      type: IsarType.long,
-    ),
     r'spriteUrl': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'spriteUrl',
       type: IsarType.string,
     ),
     r'types': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'types',
       type: IsarType.stringList,
     ),
     r'weight': PropertySchema(
-      id: 5,
+      id: 4,
       name: r'weight',
       type: IsarType.long,
     )
@@ -103,10 +98,9 @@ void _myPokemonModelSerialize(
 ) {
   writer.writeLong(offsets[0], object.height);
   writer.writeString(offsets[1], object.name);
-  writer.writeLong(offsets[2], object.pokemonId);
-  writer.writeString(offsets[3], object.spriteUrl);
-  writer.writeStringList(offsets[4], object.types);
-  writer.writeLong(offsets[5], object.weight);
+  writer.writeString(offsets[2], object.spriteUrl);
+  writer.writeStringList(offsets[3], object.types);
+  writer.writeLong(offsets[4], object.weight);
 }
 
 MyPokemonModel _myPokemonModelDeserialize(
@@ -118,10 +112,9 @@ MyPokemonModel _myPokemonModelDeserialize(
   final object = MyPokemonModel(
     height: reader.readLongOrNull(offsets[0]),
     name: reader.readStringOrNull(offsets[1]),
-    pokemonId: reader.readLongOrNull(offsets[2]),
-    spriteUrl: reader.readStringOrNull(offsets[3]),
-    types: reader.readStringList(offsets[4]),
-    weight: reader.readLongOrNull(offsets[5]),
+    spriteUrl: reader.readStringOrNull(offsets[2]),
+    types: reader.readStringList(offsets[3]),
+    weight: reader.readLongOrNull(offsets[4]),
   );
   object.id = id;
   return object;
@@ -139,12 +132,10 @@ P _myPokemonModelDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readLongOrNull(offset)) as P;
-    case 3:
       return (reader.readStringOrNull(offset)) as P;
-    case 4:
+    case 3:
       return (reader.readStringList(offset)) as P;
-    case 5:
+    case 4:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -526,80 +517,6 @@ extension MyPokemonModelQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'name',
         value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterFilterCondition>
-      pokemonIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'pokemonId',
-      ));
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterFilterCondition>
-      pokemonIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'pokemonId',
-      ));
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterFilterCondition>
-      pokemonIdEqualTo(int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'pokemonId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterFilterCondition>
-      pokemonIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'pokemonId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterFilterCondition>
-      pokemonIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'pokemonId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterFilterCondition>
-      pokemonIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'pokemonId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
       ));
     });
   }
@@ -1109,19 +1026,6 @@ extension MyPokemonModelQuerySortBy
     });
   }
 
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterSortBy> sortByPokemonId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pokemonId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterSortBy>
-      sortByPokemonIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pokemonId', Sort.desc);
-    });
-  }
-
   QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterSortBy> sortBySpriteUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'spriteUrl', Sort.asc);
@@ -1188,19 +1092,6 @@ extension MyPokemonModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterSortBy> thenByPokemonId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pokemonId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterSortBy>
-      thenByPokemonIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pokemonId', Sort.desc);
-    });
-  }
-
   QueryBuilder<MyPokemonModel, MyPokemonModel, QAfterSortBy> thenBySpriteUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'spriteUrl', Sort.asc);
@@ -1243,13 +1134,6 @@ extension MyPokemonModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<MyPokemonModel, MyPokemonModel, QDistinct>
-      distinctByPokemonId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'pokemonId');
-    });
-  }
-
   QueryBuilder<MyPokemonModel, MyPokemonModel, QDistinct> distinctBySpriteUrl(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1287,12 +1171,6 @@ extension MyPokemonModelQueryProperty
   QueryBuilder<MyPokemonModel, String?, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
-    });
-  }
-
-  QueryBuilder<MyPokemonModel, int?, QQueryOperations> pokemonIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'pokemonId');
     });
   }
 

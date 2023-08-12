@@ -5,7 +5,6 @@ part 'my_pokemons_model.g.dart';
 class MyPokemonModel {
   Id id = Isar.autoIncrement;
   int? height;
-  int? pokemonId;
   String? name;
   String? spriteUrl;
   int? weight;
@@ -13,7 +12,6 @@ class MyPokemonModel {
 
   MyPokemonModel({
     this.height,
-    this.pokemonId,
     this.name,
     this.types ,
     this.weight,

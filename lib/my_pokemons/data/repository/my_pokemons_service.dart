@@ -40,7 +40,6 @@ class MyPokemonService {
     if (existingItem.isEmptySync()) {
       // create a pokemon
       final myPokemon = MyPokemonModel()
-      ..pokemonId = pokemonId
       ..spriteUrl = spriteUrl
       ..name = name
       ..weight = weight
