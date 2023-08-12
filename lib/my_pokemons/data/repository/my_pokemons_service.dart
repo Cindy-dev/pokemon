@@ -16,7 +16,7 @@ class MyPokemonService {
 
   Future<void> deleteMyPokemon(int id) async {
     final isar = await openIsar();
-    isar.writeTxnSync(() async => await isar.myPokemonModels.delete(id));
+    isar.writeTxn(() async => await isar.myPokemonModels.delete(id));
   }
 
   Stream<List<MyPokemonModel>> getAllMyPokemon() async* {

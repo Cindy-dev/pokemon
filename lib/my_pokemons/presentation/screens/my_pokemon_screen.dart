@@ -11,14 +11,23 @@ class MyPokemonScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vm = ref.read(fetchMyPokemonVM);
+    final vm = ref.watch(fetchMyPokemonVM);
     return Scaffold(
+      backgroundColor: context.primaryColor,
       appBar: AppBar(
+        backgroundColor: context.primaryColor,
+        leading: InkWell(
+          onTap: ()=>Navigator.pop(context),
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: context.themeData.cardColor,
+          ),
+        ),
         scrolledUnderElevation: 0,
-        title: Text(
+        title: const Text(
           "My Pokemons",
           style:
-              AppTextStyles.displayLarge.copyWith(color: context.primaryColor),
+              AppTextStyles.displayLarge,
         ),
       ),
       body: SafeArea(
@@ -44,7 +53,7 @@ class MyPokemonScreen extends ConsumerWidget {
                           )
                         : const Expanded(
                             child: Center(
-                              child: Text("Your Pokemon List is Empty",
+                              child: Text("Your Pokemon List Is Empty",
                                   style: AppTextStyles.headingSemiBold),
                             ),
                           );

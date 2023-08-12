@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/my_pokemons/data/data/model/my_pokemons_model.dart';
+import 'package:pokemon/my_pokemons/data/repository/my_pokemons_service.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import '../../../utils/theme/theme.dart';
 
@@ -70,10 +72,15 @@ class MyPokemonWidget extends StatelessWidget {
                         ),
                     ],
                   ),
-                  IconButton(
-                      onPressed: () {
-
-                      }, icon: const Icon(Icons.delete))
+                  Consumer(builder: (_, ref, child) {
+                    return IconButton(
+                        onPressed: () {
+                          ref
+                              .read(myPokemonServiceProvider)
+                              .deleteMyPokemon(myPokemonData.id);
+                        },
+                        icon: const Icon(Icons.delete));
+                  })
                 ],
               ),
             ),
