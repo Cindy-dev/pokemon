@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import '../../../favorites/data/repository/isar_service.dart';
+import '../../../isar_service.dart';
 import 'package:pokemon/my_pokemons/data/data/model/my_pokemons_model.dart';
 
 class MyPokemonService {

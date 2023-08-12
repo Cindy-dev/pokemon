@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:pokemon/pokemon/data/model/pokemon_detail_model.dart';
-import 'isar_service.dart';
+import '../../../isar_service.dart';
 
 class FavoritePokemonService {
   Future<Isar> openIsar() async {
@@ -17,10 +17,20 @@ class FavoritePokemonService {
   }
 
   Future<bool> existingItemFave(String pokemonName) async {
+     bool isExist = false;
     final isar = await openIsar();
     final favoriteDB = isar.pokemonDetailModels;
-    final existingItem = favoriteDB.where().filter().nameContains(pokemonName);
-    return existingItem.isEmptySync();
+    final existingItem =
+    favoriteDB.where().filter().nameContains(pokemonName);
+    if(existingItem.isNotEmptySync()){
+      isExist = true;
+    }else{
+      isExist = false;
+    }
+
+    print(isExist);
+   // return existingItem.isEmptySync();
+    return isExist;
   }
 
   Stream<List<PokemonDetailModel>> getAllFavoritePokemon() async* {

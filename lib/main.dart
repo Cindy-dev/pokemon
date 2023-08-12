@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/utils/pokemon_routes.dart';
 import 'package:pokemon/utils/theme/theme.dart';
-import 'favorites/data/repository/isar_service.dart';
+import 'isar_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
