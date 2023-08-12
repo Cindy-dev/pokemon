@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/favorites/presentation/screens/favorite_pokemon_screen.dart';
+import 'package:pokemon/my_pokemons/presentation/widgets/add_to_my_pokemon_sheet.dart';
 import 'package:pokemon/pokemon/logic/pokemon_states.dart';
 import 'package:pokemon/pokemon/logic/view_models/fetch_pokemon_view_model.dart';
 import 'package:pokemon/pokemon/presentation/widgets/pokemon_grid_display.dart';
@@ -163,10 +164,13 @@ class _PokemonHomeScreenState extends ConsumerState<PokemonHomeScreen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(right: 10, bottom: 10),
         child: FloatingActionButton(
-
           backgroundColor: context.themeData.cardColor,
-          onPressed: () {},
-          child: Icon(Icons.add, color: context.primaryColor,),
+          //open a from field sheet to add to your pokemon list
+          onPressed: () => addToMyPokemonModalSheet(context),
+          child: Icon(
+            Icons.add,
+            color: context.primaryColor,
+          ),
         ),
       ),
     );
