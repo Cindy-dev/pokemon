@@ -27,7 +27,7 @@ class FavoritePokemonService {
     });
   }
 
-  ///
+  ////function to check if a favorite item exist
   Future<bool> existingItemFave(String name) async {
     final isar = await openIsar();
     final favoriteDB = isar.pokemonDetailModels;
