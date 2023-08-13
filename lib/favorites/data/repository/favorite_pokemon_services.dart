@@ -8,6 +8,7 @@ class FavoritePokemonService {
     return IsarService.isarInstance!;
   }
 
+  //function to create a favorite item
   Future<void> createFavorite(
     PokemonDetailModel newFavoritePokemon,
   ) async {
@@ -15,30 +16,33 @@ class FavoritePokemonService {
     isar.writeTxnSync<int>(
         () => isar.pokemonDetailModels.putSync(newFavoritePokemon));
   }
+  //function to delete a favorite item
+  Future<void> deleteFavorite(
+    PokemonDetailModel pokemonDetailModel,
+  ) async {
+    final isar = await openIsar();
+    final itemIdToDelete = pokemonDetailModel.id;
+    await isar.writeTxn(() async {
+      await isar.pokemonDetailModels.delete(itemIdToDelete);
+    });
+  }
 
-  Future<bool> existingItemFave(String pokemonName) async {
-     bool isExist = false;
+  ///
+  Future<bool> existingItemFave(String name) async {
     final isar = await openIsar();
     final favoriteDB = isar.pokemonDetailModels;
     final existingItem =
-    favoriteDB.where().filter().nameContains(pokemonName);
-    if(existingItem.isNotEmptySync()){
-      isExist = true;
-    }else{
-      isExist = false;
-    }
-
-    print(isExist);
-   // return existingItem.isEmptySync();
-    return isExist;
+    favoriteDB.where().filter().nameContains(name);
+    return existingItem.isEmptySync();
   }
 
+  //function to fetch all favorite items
   Stream<List<PokemonDetailModel>> getAllFavoritePokemon() async* {
     final isar = await openIsar();
     yield* isar.pokemonDetailModels.where().watch(fireImmediately: true);
   }
 
-
+  //function to check if a favorite item exist to either add or delete it
   toggleFavoriteItem({required PokemonDetailModel pokemonDetailModel}) async {
     final isar = await openIsar();
     final favoriteDB = isar.pokemonDetailModels;
@@ -51,11 +55,7 @@ class FavoritePokemonService {
       final favoritePokemon = pokemonDetailModel;
       createFavorite(favoritePokemon);
     } else {
-      final isar = await openIsar();
-      final itemIdToDelete = pokemonDetailModel.id;
-      await isar.writeTxn(() async {
-        await isar.pokemonDetailModels.delete(itemIdToDelete);
-      });
+     deleteFavorite(pokemonDetailModel);
     }
   }
 }

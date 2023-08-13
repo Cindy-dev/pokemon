@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pokemon/favorites/logic/favorite_pokemon_view_model.dart';
+import 'package:pokemon/favorites/data/repository/favorite_pokemon_services.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/theme/theme.dart';
+import '../../../favorites/logic/add_favorite_pokemon_view_model.dart';
+import '../../data/model/pokemon_detail_model.dart';
 
-class PokemonDetailsHeader extends StatelessWidget {
-  VoidCallback? favoriteButtonTap;
-  final String title;
-  final String pokemonName;
-  PokemonDetailsHeader(
-      {Key? key,
-      required this.title,
-      this.favoriteButtonTap,
-      required this.pokemonName})
+class PokemonDetailsHeader extends StatefulWidget {
+  final PokemonDetailModel pokemonDetailModel;
+  const PokemonDetailsHeader({Key? key, required this.pokemonDetailModel})
       : super(key: key);
 
+  @override
+  State<PokemonDetailsHeader> createState() => _PokemonDetailsHeaderState();
+}
+
+class _PokemonDetailsHeaderState extends State<PokemonDetailsHeader> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,28 +32,53 @@ class PokemonDetailsHeader extends StatelessWidget {
               ),
             ),
             Text(
-              title,
+              "#${widget.pokemonDetailModel.pokemonId.toString()}",
               style: AppTextStyles.headingBold,
             ),
-            Consumer(builder: (_, ref, child) {
-              final isExisting = ref
-                  .watch(checkPokemonExistenceVM(pokemonName));
-             return isExisting.when(data: (data){
-                return data ?  InkWell(
-                  onTap: favoriteButtonTap,
-                  child: Icon(Icons.favorite_outline,
-                      color: context.themeData.cardColor),
-                ) : InkWell(
-                  onTap: favoriteButtonTap,
-                  child: Icon(Icons.favorite,
-                      color: context.themeData.cardColor),
+            Consumer(
+              builder: (_, ref, child) {
+                ref.watch(addFavoritePokemonVM);
+                return InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: () {
+                    ref
+                        .read(addFavoritePokemonVM.notifier)
+                        .addFavoritePokemon(widget.pokemonDetailModel);
+                    setState(() {});
+                  },
+                  child: FutureBuilder<bool>(
+                    future: ref
+                        .watch(favoritePokemonServiceProvider)
+                        .existingItemFave(widget.pokemonDetailModel.name ?? ""),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Icon(
+                          Icons.favorite_border_outlined,
+                          size: 30,
+                          color: appTheme.cardColor,
+                        );
+                      } else if (snapshot.hasData) {
+                        return snapshot.data!
+                            ? Icon(
+                                Icons.favorite_border_outlined,
+                                size: 30,
+                                color: context.themeData.cardColor,
+                              )
+                            : Icon(Icons.favorite,
+                                size: 30, color: context.themeData.cardColor);
+                      } else {
+                        return Icon(
+                          Icons.favorite_border_outlined,
+                          size: 30,
+                          color: appTheme.cardColor,
+                        );
+                      }
+                    },
+                  ),
                 );
-              }, error: (e,s){
-               return Container();
-             }, loading: (){
-               return Container();
-             } );
-            })
+              },
+            ),
           ],
         ),
       ),

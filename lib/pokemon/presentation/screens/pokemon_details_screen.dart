@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pokemon/favorites/logic/favorite_pokemon_view_model.dart';
 import 'package:pokemon/pokemon/presentation/widgets/pokemon_details_header.dart';
 import 'package:pokemon/pokemon/presentation/widgets/pokemon_details_widget.dart';
 import 'package:pokemon/utils/app_extension.dart';
 import 'package:pokemon/utils/pokemon_loading_indicatior.dart';
+import '../../../favorites/logic/add_favorite_pokemon_view_model.dart';
 import '../../data/model/pokemon_detail_model.dart';
 
 class PokemonDetailsScreen extends StatelessWidget {
@@ -42,15 +42,10 @@ class PokemonDetailsScreen extends StatelessWidget {
               PokemonDetailsWidget(pokemonDetailModel: pokemonDetailModel),
             ],
           ),
-          Consumer(builder: (_, ref, child) {
+          Consumer(builder: (_, ref, child){
+              final vm = ref.watch(addFavoritePokemonVM);
             return PokemonDetailsHeader(
-              pokemonName: pokemonDetailModel.name ?? "",
-              favoriteButtonTap: () {
-                ref
-                    .read(favoritePokemonVM.notifier)
-                    .addToFavorite(pokemonDetailModel: pokemonDetailModel);
-              },
-              title: "#${pokemonDetailModel.pokemonId ?? "0"}",
+              pokemonDetailModel: pokemonDetailModel,
             );
           }),
         ],
