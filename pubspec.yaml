@@ -34,6 +34,7 @@ flutter:
 
   assets:
     - assets/images/pokemon.png
+    - assets/images/screenshots/
 
 
 

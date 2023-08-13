@@ -40,23 +40,38 @@ class _FavoritePokemonScreenState extends ConsumerState<FavoritePokemonScreen> {
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            margin: const EdgeInsets.only(
-                                                right: 14),
-                                            height: context.deviceHeight() / 15,
-                                            width: context.deviceWidth() / 4,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                    favoritePokemonData.sprites!
-                                                        .frontDefault!),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
+                                          favoritePokemonData.sprites?.frontDefault != null
+                                              ? Container(
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets.only(
+                                                      right: 14),
+                                                  height:
+                                                      context.deviceHeight() /
+                                                          15,
+                                                  width:
+                                                      context.deviceWidth() / 4,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          favoritePokemonData
+                                                              .sprites!
+                                                              .frontDefault!),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets.only(
+                                                      right: 14),
+                                                  height:
+                                                      context.deviceHeight() /
+                                                          15,
+                                                  width:
+                                                      context.deviceWidth() / 4,
+                                                ),
                                           Text(
-                                            favoritePokemonData.name!.trim(),
+                                            favoritePokemonData.name ?? "",
                                             style:
                                                 AppTextStyles.headingSemiBold,
                                           ),
