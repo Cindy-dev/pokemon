@@ -36,7 +36,7 @@ Screen flow/Project Structure:
 - A Screen that displays your Pokemon stored in a local database
 
 DOWNLOAD APK:
-<a href='https://drive.google.com/file/d/1SVOpeIxEkBoHy1SjBDJR7lNLYStss1p6/view?usp=sharing'</a>
+<a href='https://drive.google.com/file/d/1SVOpeIxEkBoHy1SjBDJR7lNLYStss1p6/view?usp=sharing'> Click to download </a>
 
 
 Images:
