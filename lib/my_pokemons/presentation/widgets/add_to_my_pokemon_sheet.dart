@@ -8,22 +8,27 @@ addToMyPokemonModalSheet(
     isScrollControlled: true,
     context: context,
     builder: (_) {
-      return DraggableScrollableSheet(
-        expand: false,
-        builder: (BuildContext context, scrollController) {
-          return Container(
-            height: context.deviceHeight() / 1.5,
-            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-            decoration: BoxDecoration(
-              color: context.themeData.cardColor,
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(20),
-                topLeft: Radius.circular(20),
+      return Padding(
+        padding:  EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom
+        ),
+        child: DraggableScrollableSheet(
+          expand: false,
+          builder: (BuildContext context, scrollController) {
+            return Container(
+              height: context.deviceHeight() / 1.5,
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+              decoration: BoxDecoration(
+                color: context.themeData.cardColor,
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
               ),
-            ),
-            child: const MyPokemonFormWidget(),
-          );
-        },
+              child: const MyPokemonFormWidget(),
+            );
+          },
+        ),
       );
     },
   );
