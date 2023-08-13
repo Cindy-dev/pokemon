@@ -14,7 +14,7 @@ pokemonLoadingIndicator(BuildContext context) {
       ),
     );
   } else {
-    Container(
+    return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.symmetric(vertical: 20),
       child: CircularProgressIndicator(color: context.themeData.cardColor),

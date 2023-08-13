@@ -29,6 +29,7 @@ class PokemonGridDisplay extends StatelessWidget {
     }
     return Expanded(
       child: Stack(
+        fit: StackFit.expand,
         children: [
           GridView.builder(
             controller: scrollController,
