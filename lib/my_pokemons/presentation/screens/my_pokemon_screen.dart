@@ -17,7 +17,7 @@ class MyPokemonScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: context.primaryColor,
         leading: InkWell(
-          onTap: ()=>Navigator.pop(context),
+          onTap: () => Navigator.pop(context),
           child: Icon(
             Icons.arrow_back_ios,
             color: context.themeData.cardColor,
@@ -26,8 +26,7 @@ class MyPokemonScreen extends ConsumerWidget {
         scrolledUnderElevation: 0,
         title: const Text(
           "My Pokemons",
-          style:
-              AppTextStyles.displayLarge,
+          style: AppTextStyles.displayLarge,
         ),
       ),
       body: SafeArea(

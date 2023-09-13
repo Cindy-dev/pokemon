@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon/favorites/data/repository/favorite_pokemon_services.dart';
 import 'package:pokemon/utils/app_extension.dart';
+import 'package:pokemon/utils/pokemon_routes.dart';
 import 'package:pokemon/utils/theme/theme.dart';
 import '../../../favorites/logic/add_favorite_pokemon_view_model.dart';
 import '../../data/model/pokemon_detail_model.dart';
@@ -79,6 +80,14 @@ class _PokemonDetailsHeaderState extends State<PokemonDetailsHeader> {
                 );
               },
             ),
+            IconButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, PokemonRoutes.myPokemonScreen),
+              icon: Icon(
+                Icons.add,
+                color: context.themeData.cardColor,
+              ),
+            )
           ],
         ),
       ),
